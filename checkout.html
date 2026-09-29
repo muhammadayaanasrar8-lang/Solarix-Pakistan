@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - Solarix Pakistan{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <h2 class="section-title">Secure Checkout</h2>
+    <p class="section-subtitle">Please complete the delivery details below to finalize your solar setup order.</p>
+
+    {% if order_success %}
+        <!-- Success Overlay Modal (Server-rendered) -->
+        <div id="success-overlay" class="success-overlay active">
+            <div class="success-modal">
+                <div class="success-icon-wrapper" style="font-size: 32px; line-height: 1;">
+                    ✓
+                </div>
+                <h2>Order Confirmed!</h2>
+                <p>Your order has been received and is being processed by the Solarix team.</p>
+                
+                <div class="success-details-card">
+                    <div class="success-detail-row">
+                        <span>Order ID</span>
+                        <span id="success-ord-id" style="color: var(--accent-gold); font-weight: bold;">{{ order.order_id }}</span>
+                    </div>
+                    <div class="success-detail-row">
+                        <span>Customer</span>
+                        <span id="success-name">{{ order.name }}</span>
+                    </div>
+                    <div class="success-detail-row">
+                        <span>Delivery Phone</span>
+                        <span id="success-phone">{{ order.phone }}</span>
+                    </div>
+                    <div class="success-detail-row">
+                        <span>Address</span>
+                        <span id="success-address" style="text-align: right; max-width: 60%;">{{ order.address }}</span>
+                    </div>
+                    <div class="success-detail-row">
+                        <span>Amount Paid</span>
+                        <span id="success-total" style="color: var(--accent-cyan); font-weight: 700;">{{ order.total | currency }}</span>
+                    </div>
+                </div>
+                
+                <a href="/" class="btn btn-primary btn-block">
+                    Return to Homepage 🏠
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="checkout-layout">
+            <!-- Delivery Form (POST to app.py handler) -->
+            <div class="checkout-form-card">
+                <h2>Shipping Information</h2>
+                <form id="checkout-order-form" action="{{ url_for('checkout') }}" method="POST">
+                    <div class="form-group">
+                        <label for="cust-name">Full Name</label>
+                        <input type="text" id="cust-name" name="name" placeholder="Muhammad Ayaan" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cust-email">Email Address</label>
+                            <input type="email" id="cust-email" name="email" placeholder="ahsan@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-phone">Phone Number</label>
+                            <input type="text" id="cust-phone" name="phone" placeholder="03001234567" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cust-address">Delivery Address</label>
+                        <textarea id="cust-address" name="address" rows="3" placeholder="House 321, Gulshan-e-Iqbal, Karachi" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method</label>
+                        <select id="payment-method" name="payment" required>
+                            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px;">
+                        Place Order ✓
+                    </button>
+                </form>
+            </div>
+
+            <!-- Checkout Summary -->
+            <div class="checkout-summary-card">
+                <h2>Order Summary</h2>
+                <div id="checkout-items-list" class="checkout-items-list">
+                    {% for item in cart_items %}
+                    <div class="checkout-item">
+                        <div class="checkout-item-left">
+                            <span class="checkout-item-qty">{{ item.quantity }}x</span>
+                            <span class="checkout-item-name">{{ item.name }}</span>
+                        </div>
+                        <span class="checkout-item-price">{{ item.total | currency }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="checkout-subtotal">{{ subtotal | currency }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="checkout-shipping">{% if shipping == 0 %}FREE{% else %}{{ shipping | currency }}{% endif %}</span>
+                </div>
+                <div class="summary-row">
+                    <span>GST (18%)</span>
+                    <span id="checkout-tax">{{ tax | currency }}</span>
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-row total-row">
+                    <span>Grand Total</span>
+                    <span id="checkout-total">{{ grand_total | currency }}</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Solarix Pakistan - Clean Solar Energy Solutions{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <span class="hero-tag">Solar Revolution in Pakistan ☀️</span>
+        <h1>Clean Energy. Infinite Power.</h1>
+        <p>Transition to premium, high-efficiency solar energy systems. Cut your electricity bills by up to 90% and power your life sustainably.</p>
+        <div class="hero-ctas">
+            <a href="/products" class="btn btn-primary">
+                Explore Solar Gear 🛍️
+            </a>
+            <a href="/chatbot" class="btn btn-secondary">
+                Calculate System Size 🤖
+            </a>
+        </div>
+    </div>
+    
+    <div class="hero-visual">
+        <div class="hero-image-wrapper">
+            <img src="{{ url_for('static', filename='images/main.png') }}" alt="Modern Solar Powered Home" class="hero-image">
+        </div>
+        <div class="hero-glow"></div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="features-section">
+    <div class="features-container">
+        <div class="section-title-wrap">
+            <h2 class="section-title">Why Solarix Solar?</h2>
+            <p class="section-subtitle">We design and supply state-of-the-art green energy products engineered to perform in all climates.</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon" style="font-size: 24px; line-height: 1;">
+                    ☀️
+                </div>
+                <h3>Premium Monocrystalline Panels</h3>
+                <p>Equipped with state-of-the-art half-cell technologies, maximizing conversion rates even in low-light conditions.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon" style="font-size: 24px; line-height: 1;">
+                    ⚙️
+                </div>
+                <h3>Smart Hybrid Inverters</h3>
+                <p>Pure sine wave hybrid systems featuring dual MPPT inputs and remote mobile monitoring applications.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon" style="font-size: 24px; line-height: 1;">
+                    🔋
+                </div>
+                <h3>High-Capacity Lithium Storage</h3>
+                <p>Premium LiFePO4 batteries with 6,000+ lifecycle guarantees and intelligent battery management units.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

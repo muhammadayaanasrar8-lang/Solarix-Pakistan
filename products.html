@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Solar Products & Packages - Solarix Pakistan{% endblock %}
+
+{% block content %}
+<div class="products-container">
+    <h2 class="section-title">Solarix Product Showcase</h2>
+    <p class="section-subtitle">Browse pre-configured complete solar systems or customize your custom configuration using our premium catalog components.</p>
+    
+    <!-- SECTION 1: Pre-Configured Solar System Packages -->
+    <div class="products-section-divider" style="margin-top: 40px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-align: left;">
+        <h2 style="font-size: 1.8rem; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">📦</span> Complete Solar System Packages
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 5px;">All-inclusive setups designed for quick deployment, battery backup, and net-metering registration.</p>
+    </div>
+    
+    <div class="products-grid" style="margin-bottom: 60px;">
+        {% for id, pkg in packages.items() %}
+        <div class="product-card" style="border-color: rgba(245, 158, 11, 0.25);">
+            <div class="product-image-container">
+                <span class="product-badge" style="background-color: var(--accent-gold); color: #ffffff; border: none; font-weight: 700;">Full Package</span>
+                <img src="{{ url_for('static', filename=pkg.image.replace('/static/', '')) }}" alt="{{ pkg.name }}" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3>{{ pkg.name }}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px; min-height: 40px; text-align: left;">{{ pkg.desc }}</p>
+                <ul class="product-specs" style="margin-bottom: 20px;">
+                    <li style="text-align: left;"><span style="color: var(--accent-gold); font-weight: bold; margin-right: 6px;">✓</span> {{ pkg.specs }}</li>
+                </ul>
+                <div class="product-footer">
+                    <span class="product-price" style="color: var(--accent-gold);">{{ pkg.price | currency }}</span>
+                    <!-- Consolidated URL endpoint (no blueprint prefix) -->
+                    <form action="{{ url_for('add_to_cart', item_id=id) }}" method="POST" style="margin: 0;">
+                        <button type="submit" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, var(--accent-gold) 0%, #d97706 100%); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+                            Add Package
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- SECTION 2: Individual Components -->
+    <div class="products-section-divider" style="margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-align: left;">
+        <h2 style="font-size: 1.8rem; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">🔧</span> Solar Components & Hardware
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 5px;">Expand an existing array or pick specific panels, high-efficiency inverters, and battery storage cells.</p>
+    </div>
+
+    <div class="products-grid">
+        {% for id, prod in products.items() %}
+        <div class="product-card">
+            <div class="product-image-container">
+                {% if id in ['p1', 'p2', 'p3'] %}
+                <span class="product-badge">Popular Component</span>
+                {% endif %}
+                <img src="{{ url_for('static', filename=prod.image.replace('/static/', '')) }}" alt="{{ prod.name }}" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3>{{ prod.name }}</h3>
+                <ul class="product-specs" style="margin-bottom: 20px;">
+                    {% for spec in prod.specs %}
+                    <li style="text-align: left;"><span style="color: var(--accent-cyan); font-weight: bold; margin-right: 6px;">✓</span> {{ spec }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="product-footer">
+                    <span class="product-price">{{ prod.price | currency }}</span>
+                    <!-- Consolidated URL endpoint (no blueprint prefix) -->
+                    <form action="{{ url_for('add_to_cart', item_id=id) }}" method="POST" style="margin: 0;">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Add to Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

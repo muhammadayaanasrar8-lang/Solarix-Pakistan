@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Your Cart - Solarix Pakistan{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2 class="section-title">Your Shopping Cart 🛒</h2>
+    <p class="section-subtitle">Review items, adjust quantities, and proceed to secure checkout.</p>
+    
+    <div class="cart-layout">
+        {% if cart_items %}
+            <!-- Cart Items List (Server-rendered) -->
+            <div id="cart-items-container" class="cart-items-list">
+                <div class="cart-items-header">
+                    <span>Product</span>
+                    <span>Price</span>
+                    <span>Quantity</span>
+                    <span>Total</span>
+                </div>
+                
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <img src="{{ url_for('static', filename=item.image.replace('/static/', '')) }}" alt="{{ item.name }}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3>{{ item.name }}</h3>
+                            <!-- Remove Item Form (no blueprint prefix) -->
+                            <form action="{{ url_for('remove_from_cart', item_id=item.id) }}" method="POST" style="display: inline-block;">
+                                <button type="submit" class="btn-remove">
+                                    🗑️ Remove
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">{{ item.price | currency }}</div>
+                    <div class="cart-item-qty">
+                        <!-- Decrement Quantity Form (no blueprint prefix) -->
+                        <form action="{{ url_for('update_qty', item_id=item.id) }}" method="POST" style="display: inline;">
+                            <input type="hidden" name="change" value="-1">
+                            <button type="submit" class="btn-qty-minus">-</button>
+                        </form>
+                        
+                        <span class="qty-val">{{ item.quantity }}</span>
+                        
+                        <!-- Increment Quantity Form (no blueprint prefix) -->
+                        <form action="{{ url_for('update_qty', item_id=item.id) }}" method="POST" style="display: inline;">
+                            <input type="hidden" name="change" value="1">
+                            <button type="submit" class="btn-qty-plus">+</button>
+                        </form>
+                    </div>
+                    <div class="cart-item-total">{{ item.total | currency }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Order Summary Card (Server-rendered) -->
+            <div id="cart-summary-container" class="card summary-card">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>{{ subtotal | currency }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>{% if shipping == 0 %}FREE{% else %}{{ shipping | currency }}{% endif %}</span>
+                </div>
+                <div class="summary-row">
+                    <span>GST (18%)</span>
+                    <span>{{ tax | currency }}</span>
+                </div>
+                <hr class="summary-divider">
+                <div class="summary-row total-row">
+                    <span>Total Amount</span>
+                    <span>{{ grand_total | currency }}</span>
+                </div>
+                
+                <a href="/checkout" class="btn btn-primary btn-block btn-checkout">
+                    Proceed to Checkout ➡️
+                </a>
+                
+                <p class="shipping-notice">
+                    {% if shipping == 0 %}
+                        ✓ Premium orders include free insured delivery
+                    {% else %}
+                        Tip: Orders above Rs. 100,000 qualify for free delivery!
+                    {% endif %}
+                </p>
+            </div>
+        {% else %}
+            <!-- Empty Cart Display -->
+            <div id="cart-empty-container" class="cart-empty" style="grid-column: span 2;">
+                <div class="cart-empty-icon" style="font-size: 32px; line-height: 1;">
+                    🛒
+                </div>
+                <h2>Your cart is currently empty</h2>
+                <p>Looks like you haven't added any products to your solar configuration yet.</p>
+                <a href="/products" class="btn btn-primary">
+                    Browse Solar Products ➡️
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

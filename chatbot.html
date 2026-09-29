@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Solar AI Advisor - Solarix Pakistan{% endblock %}
+
+{% block content %}
+<div class="chatbot-container">
+    <h2 class="section-title">Solar Recommendation AI</h2>
+    <p class="section-subtitle">Let our smart advisor calculate the ideal solar setup package based on your monthly energy bill.</p>
+    
+    <div class="chat-card">
+        <!-- Chat Header -->
+        <div class="chat-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="bot-avatar" style="font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center;">
+                    🤖
+                </div>
+                <div class="chat-header-info">
+                    <h2>Solarix Advisor</h2>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        <span>Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Clear Conversation button (no blueprint prefix) -->
+            <form action="{{ url_for('clear_chat') }}" method="POST" style="margin: 0;">
+                <button type="submit" class="btn btn-secondary btn-sm" style="padding: 6px 12px; font-size: 0.8rem; border-color: rgba(255, 255, 255, 0.1);">
+                    Clear Chat 🗑️
+                </button>
+            </form>
+        </div>
+
+        <!-- Chat Messages History Container -->
+        <div id="chat-messages" class="chat-messages">
+            {% for msg in chat_messages %}
+                <div class="chat-bubble {% if msg.is_user %}chat-bubble-user{% else %}chat-bubble-bot{% endif %}">
+                    {{ msg.text | safe | replace('\n', '<br>') }}
+                    
+                    {% if msg.package %}
+                        <!-- Interactive Recommended Package card (rendered server-side) -->
+                        <div class="bot-rec-widget">
+                            <span class="rec-title">Recommended Package</span>
+                            <span class="rec-item">{{ msg.package.name }}</span>
+                            <p class="rec-details">
+                                {{ msg.package.desc }}<br>
+                                <strong>Included:</strong> {{ msg.package.specs }}
+                            </p>
+                            <div class="rec-footer">
+                                <span class="rec-price">{{ msg.package.price | currency }}</span>
+                                <!-- standard GET anchor styled as a button to add to session cart (no blueprint prefix) -->
+                                <a href="{{ url_for('add_to_cart', item_id=msg.package.key) }}" class="btn btn-primary btn-sm">
+                                    Add to Cart
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Input Area (Standard POST Form) (no blueprint prefix) -->
+        <form class="chat-input-area" action="{{ url_for('chatbot') }}" method="POST" style="margin: 0;">
+            <input type="number" name="bill" placeholder="Type your monthly bill (e.g. 15000)..." required min="1">
+            <button type="submit" class="btn btn-primary">
+                Analyze ➡️
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Scroll chatbot window to bottom automatically when page loads -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const messages = document.getElementById("chat-messages");
+        if (messages) {
+            messages.scrollTop = messages.scrollHeight;
+        }
+    });
+</script>
+{% endblock %}

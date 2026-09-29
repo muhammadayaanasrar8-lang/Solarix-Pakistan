@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Frequently Asked Questions - Solarix Pakistan{% endblock %}
+
+{% block content %}
+<div class="faq-container" style="max-width: 900px; margin: 0 auto; padding: 40px 20px 80px 20px;">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Find fast answers to common questions about transitioning your home or business to solar energy.</p>
+    
+    <div class="faq-list">
+        <!-- FAQ 1 -->
+        <details class="faq-item" open>
+            <summary>How do I know what size solar system I need?</summary>
+            <div class="faq-answer">
+                <p>The easiest way to calculate your required capacity is by using our **<a href="/chatbot" style="color: var(--accent-cyan); text-decoration: underline;">Solar AI Advisor</a>**! Simply enter your monthly electricity bill in PKR, and our algorithm will analyze your consumption pattern to recommend either a 3KW, 5KW, or 10KW setup based on standard Pakistani tariff rates.</p>
+            </div>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="faq-item">
+            <summary>What is Net Metering and does Solarix support it?</summary>
+            <div class="faq-answer">
+                <p>Net Metering is a NEPRA-approved utility billing mechanism that credits you for the surplus electricity your solar panels export back to the national grid. For example, during sunny days when production exceeds your consumption, the meter runs backward. Our **10KW Premium Powerhouse Package** includes full documentation, utility approvals, three-phase connection upgrades, and NEPRA registration handled entirely by our engineering team.</p>
+            </div>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="faq-item">
+            <summary>What is the difference between On-Grid, Off-Grid, and Hybrid systems?</summary>
+            <div class="faq-answer">
+                <ul style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+                    <li><strong>On-Grid Systems:</strong> Feed excess power directly to the national grid via net-metering. They are cost-effective but turn off automatically during utility blackouts/load shedding for grid safety.</li>
+                    <li><strong>Off-Grid Systems:</strong> Run completely independent of the utility company, using a battery bank to store all solar energy. They do not feed power back to the grid.</li>
+                    <li><strong>Hybrid Systems:</strong> The optimal choice for Pakistan. They support net metering to sell excess power *and* incorporate battery backup to keep your air conditioners, lights, and appliances running smoothly during load shedding.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="faq-item">
+            <summary>What warranties do you provide on solar panels and components?</summary>
+            <div class="faq-answer">
+                <p>To ensure high durability, all Solarix packages contain vetted, top-tier manufacturer components:</p>
+                <ul style="padding-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+                    <li><strong>Solar Panels:</strong> Vetted Tier-1 monocrystalline panels with a **25-year performance warranty** (guaranteeing at least 85% output at year 25) and a 12-year structural hardware warranty.</li>
+                    <li><strong>Hybrid Inverters:</strong> Vetted smart inverters with a **5-year replacement warranty** and built-in WiFi monitoring systems.</li>
+                    <li><strong>Lithium Batteries:</strong> Lithium Iron Phosphate (LiFePO4) storage batteries with a **10-year manufacturer warranty** and built-in smart BMS systems.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="faq-item">
+            <summary>How much money can I save on my monthly bill?</summary>
+            <div class="faq-answer">
+                <p>A well-optimized solar system typically reduces monthly grid bills by **80% to 90%**. The exact payback period in Pakistan ranges between 3 to 4 years, after which the electricity generated is 100% free for the remaining 20+ years of the system's operational lifespan.</p>
+            </div>
+        </details>
+
+        <!-- FAQ 6 -->
+        <details class="faq-item">
+            <summary>Can I expand my solar capacity later?</summary>
+            <div class="faq-answer">
+                <p>Yes! Our packages are designed for modular expansion. If you start with a 3KW or 5KW setup, you can add more solar panels or additional battery modules later as your power requirements grow. We recommend telling our installation team if you plan future expansions so they can size your mounts and electrical panels accordingly.</p>
+            </div>
+        </details>
+    </div>
+    
+    <div style="margin-top: 50px; text-align: center; background: var(--bg-secondary); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color);">
+        <h3 style="margin-bottom: 10px;">Still have questions?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">Our customer success team is here to help you size, plan, and deploy your green energy grid.</p>
+        <a href="mailto:info@solarix.com" class="btn btn-primary">
+            Contact Support: info@solarix.com ✉️
+        </a>
+    </div>
+</div>
